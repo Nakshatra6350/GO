@@ -12,12 +12,14 @@ import (
 
 func main(){
 	l := log.New(os.Stdout, "product-api",log.LstdFlags)
-	helloHandler := handlers.NewHello(l)
-	byeHandler := handlers.NewBye(l)
+	productsHandler := handlers.NewProducts(l)
+	// helloHandler := handlers.NewHello(l)
+	// byeHandler := handlers.NewBye(l)
 	sm := http.NewServeMux()
-	sm.Handle("/",helloHandler)
+	sm.Handle("/",productsHandler)
+	// sm.Handle("/",helloHandler)
 
-	sm.Handle("/bye",byeHandler)
+	// sm.Handle("/bye",byeHandler)
 
 	s := http.Server{
 		Addr : ":9090",
@@ -28,6 +30,7 @@ func main(){
 	}
 	
 	go func(){
+		log.Printf("server starting at port :9090")
 		err := s.ListenAndServe()
 		if err!= nil{
 			log.Fatal(err)
